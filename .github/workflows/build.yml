@@ -21,7 +21,7 @@ jobs:
     - name: Checkout project sources
       uses: actions/checkout@v3
     - name: Run build with Gradle Wrapper
-      run: mvn install
+      run: mvn -B install
 
   b2:
     runs-on: ubuntu-latest
@@ -40,13 +40,13 @@ jobs:
         cache: maven
 
     - name: Run build with Gradle Wrapper
-      run: mvn install  -Dmaven.test.failure.ignore=true
+      run: mvn -B install  -Dmaven.test.failure.ignore=true
     - name: Report
       uses: dorny/test-reporter@v1
       if: always()
       with:
         name: Maven Tests
-        path: '**/surefire-reports/*.xml'
+        path: target/surefire-reports/*.xml
         reporter: java-junit
         fail-on-error: true
 
