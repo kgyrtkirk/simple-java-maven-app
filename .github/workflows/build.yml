@@ -40,7 +40,15 @@ jobs:
         cache: maven
 
     - name: Run build with Gradle Wrapper
-      run: mvn install
+      run: mvn install  -Dmaven.test.failure.ignore=true
+    - name: Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Maven Tests
+          path: **/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
 
   joke2:
     runs-on: ubuntu-latest
